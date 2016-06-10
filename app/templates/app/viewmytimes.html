@@ -1,0 +1,16 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+
+<table>
+{% for time in times %}
+<tr>
+  <td>{{ time.date }}</td>
+  <td>{{ time.project }}</td>
+  <td>{{ time.hours }}</td>
+  <td><a href='{% url 'edit-time' time.pk %}'>Edit</a></td>
+  <td><a href='{% url 'delete-time' time.pk %}'>Delete</a></td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

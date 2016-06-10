@@ -1,0 +1,22 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+
+{% for key, value in users.items %}
+<table>
+  <tr>
+    <th colspan='4'>{{ key }}</th>
+  </tr>
+  {% for time in value %}
+
+  <tr>
+    <td>{{ time.date }}</td>
+    <td>{{ time.user }}</td>
+    <td>{{ time.hours }}</td>
+
+  </tr>
+  {% endfor %}
+</table>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,9 @@
+body {
+  background-color: lightblue;
+  padding-top:50px;
+}
+
+.form-frame {
+  margin: 50px auto;
+  width: 700px;
+}

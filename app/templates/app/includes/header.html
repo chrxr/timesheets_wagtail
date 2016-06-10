@@ -1,0 +1,10 @@
+{% if user.is_authenticated %}
+<p>Hi, {{ user.username }}!</p>
+<a href='/user/logout'>Logout</a>
+<a href='{% url "view-my-times" %}'>View my times</a>
+<a href='{% url "log-time" %}'>Log time</a>
+<a href='{% url "projects-view" %}'>Projects view</a>
+<a href='{% url "users-view" %}'>Users view</a>
+{% else %}
+<a href='/user/login'>Login</a>
+{% endif %}

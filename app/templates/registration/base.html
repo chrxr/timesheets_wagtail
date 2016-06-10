@@ -1,0 +1,18 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'app/css/base.css' %}">
+</head>
+<body>
+  <div class='form-frame'>
+  {% block content %}
+  {% endblock %}
+</div>
+{% block extra_js %}
+{% endblock %}
+</body>
+</html>

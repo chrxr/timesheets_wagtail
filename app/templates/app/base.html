@@ -1,0 +1,24 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'app/vendor/jquery-ui-1.11.4/jquery-ui.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'app/css/base.css' %}">
+</head>
+<body>
+  {% include 'app/includes/header.html' %}
+  <div class='form-frame'>
+  {% block content %}
+  {% endblock %}
+</div>
+
+<script src="{% static 'app/vendor/jquery/jquery-3.0.0.min.js' %}"></script>
+<script src="{% static 'app/vendor/jquery-ui-1.11.4/jquery-ui.min.js' %}"></script>
+
+{% block extra_js %}
+{% endblock %}
+</body>
+</html>

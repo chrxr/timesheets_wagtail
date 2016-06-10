@@ -1,0 +1,30 @@
+{% extends "app/base.html" %}
+
+{% load static %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+      <ul>
+        {% for field in form %}
+            <li>{{ field.label_tag }} {{ field }}</li>
+        {% endfor %}
+      </ul>
+    <input type="submit" value="Submit" />
+</form>
+
+{% endblock %}
+
+{% block extra_js %}
+  <script>
+  $.datepicker.setDefaults({
+    showOn: "both",
+    buttonImageOnly: true,
+    buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
+    buttonText: "Calendar",
+  });
+  $( "#id_date" ).datepicker(
+    {dateFormat: "mm/dd/yy"}
+  );
+  </script>
+{% endblock %}
