@@ -13,10 +13,11 @@
     <button id='filter-submit' value="Apply filter">Apply</button>
   </div>
   <div class='filter-container'>
-    <label for="date-from">Date from: </label>
-    <input class='date' id="date-from" name="date-from" placeholder="yyyy-mm-dd" />
-    <label for="date-to">Date to: </label>
-    <input class='date' id="date-to" name="date-to" placeholder="yyyy-mm-dd" />
+    <label for="datefrom">Date from: </label>
+    <input class='date' id="datefrom" name="datefrom" placeholder="yyyy-mm-dd" />
+    <label for="dateto">Date to: </label>
+    <input class='date' id="dateto" name="dateto" placeholder="yyyy-mm-dd" />
     <button id='date-submit' value="Apply filter">Apply</button>
+    <a href='{{ request.path }}'>Clear filters</a>
   </div>
 {% endif %}

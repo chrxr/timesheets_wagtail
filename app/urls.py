@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'^delete-time/([0-9]+)/$', views.deleteTime, name='delete-time'),
     url(r'^projects-view/$', views.projectsView, name='projects-view'),
     url(r'^users-view/$', views.usersView, name='users-view'),
+    url(r'^get-project-csv/$', views.getProjectCSV, name='get-project-csv'),
 ]
