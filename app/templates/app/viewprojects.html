@@ -1,22 +1,38 @@
 {% extends "app/base.html" %}
+{% load static %}
 
 {% block content %}
+<h1>Projects view</h1>
 
-{% for key, value in projects.items %}
-<table>
+<p>Sort by: <a href='' id='date-sort'>date</a> | <a href='' id='user-sort'>user</a></p>
+
+{% include 'app/includes/filters.html' %}
+{% for key, values in projects.items %}
+<table class='fixed-width'>
   <tr>
-    <th colspan='4'>{{ key }}</th>
+    <th colspan='3'>{{ key }}</th>
   </tr>
-  {% for time in value %}
-
   <tr>
-    <td>{{ time.date }}</td>
-    <td>{{ time.user }}</td>
-    <td>{{ time.hours }}</td>
-
+    <th>Date</th>
+    <th>User</th>
+    <th>Days</th>
   </tr>
-  {% endfor %}
+      {% for time in values.times %}
+      <tr>
+        <td>{{ time.date }}</td>
+        <td>{{ time.user.first_name }} {{ time.user.last_name }}</td>
+        <td>{{ time.days }}</td>
+      </tr>
+      {% endfor %}
+      <tr>
+        <td colspan='2'>Total days</td>
+        <td>{{ values.total_time }}</td>
+      </tr>
 </table>
 {% endfor %}
 
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'app/js/filters.js' %}"></script>
 {% endblock %}

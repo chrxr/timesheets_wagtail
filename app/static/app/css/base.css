@@ -1,9 +1,66 @@
 body {
   background-color: lightblue;
-  padding-top:50px;
+  font-family: 'arial';
 }
-/*
+
 .form-frame {
   margin: 50px auto;
-  width: 700px;
-}*/
+  width: 800px;
+}
+
+table {
+  border-collapse: collapse;
+  margin-bottom:1em;
+}
+
+table, th, td {
+  border:1px solid black;
+  background-color:#FFF;
+}
+
+td, th {
+  padding:10px;
+}
+
+th {
+  text-align:left;
+}
+
+.header {
+  height:40px;
+  width:100%;
+  background-color: white;
+}
+
+.header ul {
+  list-style: none;
+  margin:0;
+  padding:10px;
+}
+
+.header li {
+  display:inline-block;
+  padding-right:20px;
+}
+
+.date {
+  width: 100px;
+}
+
+.hours {
+  width:50px;
+}
+
+.hours, .date, .select {
+  margin:0 10px;
+
+}
+
+table.fixed-width {
+  width:80%;
+}
+
+.filter-container {
+  width:100%;
+  height:40px;
+}

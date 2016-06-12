@@ -1,10 +1,14 @@
+<div class='header'>
+  <ul>
 {% if user.is_authenticated %}
-<p>Hi, {{ user.username }}!</p>
-<a href='/user/logout'>Logout</a>
-<a href='{% url "view-my-times" %}'>View my times</a>
-<a href='{% url "log-time" %}'>Log time</a>
-<a href='{% url "projects-view" %}'>Projects view</a>
-<a href='{% url "users-view" %}'>Users view</a>
+    <li>Hi, {{ user.first_name }}!</li>
+    <li><a href='{% url "log-time" %}'>Log time</a></li>
+    <li><a href='{% url "view-my-times" %}'>View my times</a></li>
+    <li><a href='{% url "projects-view" %}'>Projects view</a></li>
+    <li><a href='{% url "users-view" %}'>Users view</a></li>
+    <li><a href='/user/logout'>Logout</a></li>
 {% else %}
-<a href='/user/login'>Login</a>
+    <li><a href='/user/login'>Login</a></li>
 {% endif %}
+  </ul>
+</div>

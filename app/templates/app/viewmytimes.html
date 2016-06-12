@@ -1,13 +1,19 @@
 {% extends "app/base.html" %}
 
 {% block content %}
-
-<table>
+<h1>My times</h1>
+<table class='fixed-width'>
+  <tr>
+    <th>Date</th>
+    <th>Project</th>
+    <th>Days</th>
+  </tr>
 {% for time in times %}
+
 <tr>
   <td>{{ time.date }}</td>
   <td>{{ time.project }}</td>
-  <td>{{ time.hours }}</td>
+  <td>{{ time.days }}</td>
   <td><a href='{% url 'edit-time' time.pk %}'>Edit</a></td>
   <td><a href='{% url 'delete-time' time.pk %}'>Delete</a></td>
 </tr>

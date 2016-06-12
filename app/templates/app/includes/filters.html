@@ -1,0 +1,22 @@
+{% if filters %}
+  <div class='filter-container'>
+    {% for filter in filters %}
+      <label for='{{ filter.name }}'>{{ filter.label }}: </label>
+      <select name='{{ filter.name }}' id='filter-select'>
+        <option value="all">--------</option>
+        {% for option in filter.options %}
+        <option value="{{ option.pk }}">{{ option }}</option>
+        {% endfor %}
+      </select>
+    {% endfor %}
+
+    <button id='filter-submit' value="Apply filter">Apply</button>
+  </div>
+  <div class='filter-container'>
+    <label for="date-from">Date from: </label>
+    <input class='date' id="date-from" name="date-from" placeholder="yyyy-mm-dd" />
+    <label for="date-to">Date to: </label>
+    <input class='date' id="date-to" name="date-to" placeholder="yyyy-mm-dd" />
+    <button id='date-submit' value="Apply filter">Apply</button>
+  </div>
+{% endif %}

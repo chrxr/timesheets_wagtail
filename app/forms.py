@@ -5,7 +5,8 @@ import datetime
 class WorkDayForm(forms.ModelForm):
     class Meta:
         model = WorkDay
-        fields = ['project', 'date', 'hours']
+        fields = ['project', 'date', 'days']
         widgets = {
-            'date': forms.DateInput(format='%d/%m/%Y'),
+            'date': forms.DateInput(format='%d/%m/%Y', attrs={'class': "date"}),
+            'project': forms.Select(attrs={'class': "project"}),
         }
