@@ -22,7 +22,7 @@ def logTime(request):
         else:
             return HttpResponse(form.errors)
     else:
-        form = WorkDayForm(initial={'date': datetime.date.today()},instance=WorkDay())
+        form = WorkDayForm(initial={'date': datetime.date.today().isoformat()},instance=WorkDay())
     return render(request, 'app/workdayform.html', {'form': form})
 
 
@@ -113,12 +113,12 @@ def projectsView(request):
 
 @login_required(login_url='/user/login/')
 def usersView(request):
-    user_filter = request.GET.get('user', 'none')
+    user_filter = request.GET.get('user', 'all')
     date_to_filter = request.GET.get('dateto', '')
     date_from_filter = request.GET.get('datefrom', '')
     print date_to_filter
 
-    if user_filter != 'none':
+    if user_filter != 'all':
         users = User.objects.filter(pk=user_filter)
     else:
         users = User.objects.all()
