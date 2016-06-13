@@ -5,6 +5,15 @@
 {% block content %}
 <form method="post">
     {% csrf_token %}
+    {% if form.date.errors %}
+      <p class='error'>{{ form.date.label }}{{ form.date.errors }}</p>
+    {% endif %}
+    {% if form.project.errors %}
+      <p class='error'>{{ form.project.label }}{{ form.project.errors }}</p>
+    {% endif %}
+    {% if form.days.errors %}
+      <p class='error'>{{ form.days.label }}{{ form.days.errors }}</p>
+    {% endif %}
     <p>On {{ form.date }} I worked on {{ form.project }} for {{ form.days }}.</p>
 
     <input type="submit" value="Submit" />

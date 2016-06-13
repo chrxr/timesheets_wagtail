@@ -20,7 +20,7 @@ def logTime(request):
             new_log.save()
             return HttpResponseRedirect(reverse('view-my-times'))
         else:
-            return HttpResponse(form.errors)
+            return render(request, 'app/workdayform.html', {'form': form})
     else:
         form = WorkDayForm(initial={'date': datetime.date.today().isoformat()},instance=WorkDay())
     return render(request, 'app/workdayform.html', {'form': form})
