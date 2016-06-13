@@ -1,6 +1,7 @@
 body {
   background-color: lightblue;
-  font-family: 'arial';
+  font-family: 'pt_sansregular','arial';
+  background-color: #f3f1ec;
 }
 
 .form-frame {
@@ -27,20 +28,40 @@ th {
 }
 
 .header {
-  height:40px;
+    /*height:90px;*/
   width:100%;
-  background-color: white;
+  background-color: #002147;
+  color:white;
+}
+
+.header a {
+  color:white;
+  text-decoration: none;
+  margin:0;
+  padding:0;
+  vertical-align: middle;
 }
 
 .header ul {
   list-style: none;
   margin:0;
-  padding:10px;
+  padding:20px 10px;
 }
 
 .header li {
   display:inline-block;
-  padding-right:20px;
+  margin-right:10px;
+}
+
+.header li.menu-item {
+  display:inline-block;
+  height:30px;
+  padding:5px 20px;
+  margin:0;
+}
+
+.header li.menu-item:hover {
+  background-color: #3277ae;
 }
 
 .date {

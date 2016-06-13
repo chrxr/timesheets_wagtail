@@ -2,17 +2,17 @@
   <ul>
 {% if user.is_authenticated %}
     <li>Hi, {{ user.first_name }}!</li>
-    <li><a href='{% url "log-time" %}'>Log time</a></li>
-    <li><a href='{% url "view-my-times" %}'>View my times</a></li>
+    <li class='menu-item'><a href='{% url "log-time" %}'>LOG TIME</a></li>
+    <li class='menu-item'><a href='{% url "view-my-times" %}'>VIEW MY TIMES</a></li>
     {% for group in user.groups.all %}
       {% if group.name == "manager" %}
-        <li><a href='{% url "projects-view" %}'>Projects view</a></li>
-        <li><a href='{% url "users-view" %}'>Users view</a></li>
+        <li class='menu-item'><a href='{% url "projects-view" %}'>PROJECTS VIEW</a></li>
+        <li class='menu-item'><a href='{% url "users-view" %}'>USERS VIEW</a></li>
       {% endif %}
     {% endfor %}
-    <li><a href='/user/logout'>Logout</a></li>
+    <li class='menu-item'><a href='/user/logout'>LOGOUT</a></li>
 {% else %}
-    <li><a href='/user/login'>Login</a></li>
+    <li class='menu-item'><a href='/user/login'>LOGIN</a></li>
 {% endif %}
   </ul>
 </div>
