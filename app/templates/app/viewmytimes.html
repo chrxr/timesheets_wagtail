@@ -1,7 +1,9 @@
 {% extends "app/base.html" %}
+{% load static %}
 
 {% block content %}
 <h1>My times</h1>
+{% include 'app/includes/filters.html' %}
 <table class='fixed-width'>
   <tr>
     <th>Date</th>
@@ -21,4 +23,8 @@
 </tr>
 {% endfor %}
 </table>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'app/js/filters.js' %}"></script>
 {% endblock %}

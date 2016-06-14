@@ -10,6 +10,7 @@ import datetime
 import csv
 # Create your views here.
 
+
 @login_required(login_url='/user/login/')
 def logTime(request):
     if request.method == 'POST':
@@ -22,16 +23,30 @@ def logTime(request):
         else:
             return render(request, 'app/workdayform.html', {'form': form})
     else:
-        form = WorkDayForm(initial={'date': datetime.date.today().isoformat()},instance=WorkDay())
+        form = WorkDayForm(initial={'date': datetime.date.today().isoformat()}, instance=WorkDay())
     return render(request, 'app/workdayform.html', {'form': form})
 
 
 @login_required(login_url='/user/login/')
 def viewMyTimes(request):
     logged_in_user = request.user
+    current_filters = getFilters(request)
+    filter_list = Project.objects.all()
     times = WorkDay.objects.filter(user=logged_in_user)
 
-    return render(request, 'app/viewmytimes.html', {'times': times})
+    if times:
+        if current_filters['project'] != 'all':
+            times = times.filter(project=current_filters['project'])
+
+        if current_filters['date_to'] != '':
+            times = times.filter(date__gt=current_filters['date_to'])
+
+        if current_filters['date_from'] != '':
+            times = times.filter(date__lt=current_filters['date_from'])
+
+    filters = [{"label": "Project", "name": "project", "options": filter_list}]
+
+    return render(request, 'app/viewmytimes.html', {'times': times, 'filters': filters})
 
 
 @login_required(login_url='/user/login/')
@@ -62,12 +77,10 @@ def deleteTime(request, time_id):
 
 @login_required(login_url='/user/login/')
 def projectsView(request):
-    project_filter = request.GET.get('project', 'all')
-    date_to_filter = request.GET.get('dateto', '')
-    date_from_filter = request.GET.get('datefrom', '')
+    current_filters = getFilters(request)
 
-    if project_filter != 'all':
-        projects = Project.objects.filter(pk=project_filter)
+    if current_filters['project'] != 'all':
+        projects = Project.objects.filter(pk=current_filters['project'])
     else:
         projects = Project.objects.all()
 
@@ -75,16 +88,14 @@ def projectsView(request):
     filter_list = Project.objects.all()
 
     for project in projects:
-        times = WorkDay.objects.filter(project = project).order_by('date')
+        times = WorkDay.objects.filter(project=project).order_by('date')
         if times:
 
-            if date_from_filter != '':
-                print date_from_filter
-                times = times.filter(date__gt=date_from_filter)
+            if current_filters['date_from'] != '':
+                times = times.filter(date__gt=current_filters['date_from'])
 
-            if date_to_filter != '':
-                print date_to_filter
-                times = times.filter(date__lt=date_to_filter)
+            if current_filters['date_to'] != '':
+                times = times.filter(date__lt=current_filters['date_to'])
 
             sort = request.GET.get('sort', 'none')
             if sort == 'date':
@@ -96,18 +107,17 @@ def projectsView(request):
                 total_time += float(time.days)
             all_projects[project.projectName] = {
                 'project_id': project.pk,
-                'times':times,
-                'total_time':total_time,
+                'times': times,
+                'total_time': total_time,
             }
 
-    filters = [{"label": "Project","name": "project", "options": filter_list}]
+    filters = [{"label": "Project", "name": "project", "options": filter_list}]
 
-    return render(request,
-                'app/viewprojects.html', {
+    return render(request, 'app/viewprojects.html', {
                 'projects': all_projects,
                 'filters': filters,
-                'date_to': date_to_filter,
-                'date_from': date_from_filter
+                'date_to': current_filters['date_to'],
+                'date_from': current_filters['date_from']
                 })
 
 
@@ -116,7 +126,6 @@ def usersView(request):
     user_filter = request.GET.get('user', 'all')
     date_to_filter = request.GET.get('dateto', '')
     date_from_filter = request.GET.get('datefrom', '')
-    print date_to_filter
 
     if user_filter != 'all':
         users = User.objects.filter(pk=user_filter)
@@ -125,7 +134,7 @@ def usersView(request):
     all_users = {}
     filter_list = User.objects.all()
     for user in users:
-        times = WorkDay.objects.filter(user = user).order_by('date')
+        times = WorkDay.objects.filter(user=user).order_by('date')
 
         if date_from_filter != '':
             print date_from_filter
@@ -142,35 +151,31 @@ def usersView(request):
             times = times.order_by('project')
         all_users[user] = times
 
-    filters = [{"label": "User","name": "user", "options": filter_list}]
+    filters = [{"label": "User", "name": "user", "options": filter_list}]
 
     return render(request, 'app/viewusers.html', {'users': all_users, 'filters': filters})
 
 
 @login_required(login_url='/user/login/')
 def getProjectCSV(request):
-    project_filter = request.GET.get('project', 'all')
-    date_to_filter = request.GET.get('dateto', '')
-    date_from_filter = request.GET.get('datefrom', '')
+    current_filters = getFilters(request)
 
-    project = Project.objects.get(pk = project_filter)
+    project = Project.objects.get(pk=current_filters['project'])
 
-    times = WorkDay.objects.filter(project = project).order_by('date')
+    times = WorkDay.objects.filter(project=project).order_by('date')
 
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="' + project.projectName + '"'
 
     if times:
 
-        if date_from_filter != '':
-            print date_from_filter
-            times = times.filter(date__gt=date_from_filter)
-            response['Content-Disposition'] += "_" + date_from_filter
+        if current_filters['date_from'] != '':
+            times = times.filter(date__gt=current_filters['date_from'])
+            response['Content-Disposition'] += "_" + current_filters['date_from']
 
-        if date_to_filter != '':
-            print date_to_filter
-            times = times.filter(date__lt=date_to_filter)
-            response['Content-Disposition'] += "_" + date_to_filter
+        if current_filters['date_to'] != '':
+            times = times.filter(date__lt=current_filters['date_to'])
+            response['Content-Disposition'] += "_" + current_filters['date_to']
 
         sort = request.GET.get('sort', 'none')
         if sort == 'date':
@@ -178,10 +183,23 @@ def getProjectCSV(request):
         elif sort == 'user':
             times = times.order_by('user__first_name')
 
-
     writer = csv.writer(response)
     writer.writerow(['Date', 'User', 'Project', 'Days'])
     for time in times:
         writer.writerow([time.date, time.user, time.project, time.days])
 
     return response
+
+
+def getFilters(request):
+    project_filter = request.GET.get('project', 'all')
+    date_to_filter = request.GET.get('dateto', '')
+    date_from_filter = request.GET.get('datefrom', '')
+
+    filters = {
+        "project": project_filter,
+        "date_to": date_to_filter,
+        "date_from": date_from_filter,
+    }
+
+    return filters
