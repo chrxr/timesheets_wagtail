@@ -19,12 +19,14 @@ table, th, td {
 }
 
 td, th {
-  padding:10px;
+  padding:8px;
   background-color:#FFF;
 }
 
 th {
   text-align:left;
+  background-color: #002147;
+  color:white;
 }
 
 .header {
@@ -32,20 +34,27 @@ th {
   width:100%;
   background-color: #002147;
   color:white;
+  height:100px;
 }
 
 .header a {
   color:white;
+  display:block;
   text-decoration: none;
   margin:0;
-  padding:0;
-  vertical-align: middle;
+  height:20px;
+  padding:10px 20px;
+}
+
+.menu-container {
+  float:left;
 }
 
 .header ul {
+  display:inline-block;
   list-style: none;
   margin:0;
-  padding:20px 10px;
+  padding:40px 10px;
 }
 
 .header li {
@@ -55,13 +64,22 @@ th {
 
 .header li.menu-item {
   display:inline-block;
-  height:30px;
-  padding:5px 20px;
   margin:0;
 }
 
 .header li.menu-item:hover {
   background-color: #3277ae;
+}
+
+.logo-container {
+  float:left;
+}
+
+.logo {
+  display:inline-block;
+  height:100px;
+  margin-top:30px;
+  margin-left:30px;
 }
 
 .date {

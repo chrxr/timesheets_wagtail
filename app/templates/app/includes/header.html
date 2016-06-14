@@ -1,6 +1,13 @@
+{% load static %}
+
 <div class='header'>
+  <div class='logo-container'>
+  <img class='logo' src='{% static "app/images/ox_brand1_rev.gif" %}' />
+  </div>
+  <div class='menu-container'>
   <ul>
 {% if user.is_authenticated %}
+
     <li>Hi, {{ user.first_name }}!</li>
     <li class='menu-item'><a href='{% url "log-time" %}'>LOG TIME</a></li>
     <li class='menu-item'><a href='{% url "view-my-times" %}'>VIEW MY TIMES</a></li>
@@ -15,4 +22,5 @@
     <li class='menu-item'><a href='/user/login'>LOGIN</a></li>
 {% endif %}
   </ul>
+</div>
 </div>
