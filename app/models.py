@@ -18,8 +18,6 @@ def get_full_name(self):
 User.add_to_class("__str__", get_full_name)
 
 
-
-
 class Project(models.Model):
     projectName = models.CharField("Project name", max_length=255)
 
@@ -29,5 +27,6 @@ class Project(models.Model):
 class WorkDay(models.Model):
     date = models.DateField("Date")
     project = models.ForeignKey('Project')
+    hours = models.DecimalField(null=True, blank=True, max_digits=4, decimal_places=2)
     days = models.CharField(max_length=255, choices = HOURS_CHOICES)
     user = models.ForeignKey(User)

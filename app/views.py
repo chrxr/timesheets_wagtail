@@ -2,14 +2,30 @@ from django import forms
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.contrib.auth import views, authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .forms import WorkDayForm
+from .forms import WorkDayForm, CreateAccountForm
 from .models import WorkDay, Project
 import datetime
 import csv
 # Create your views here.
 
+def createAccount(request):
+    if request.method == 'POST':
+        form = CreateAccountForm(request.POST)
+        if form.is_valid():
+            new_user = form.save()
+            request.session['user_name'] = new_user.username
+            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
+            login(request, user)
+            return HttpResponseRedirect(reverse('log-time'));
+        else:
+            return render(request, 'registration/signupform.html', {'form': form})
+    else:
+        form = CreateAccountForm()
+
+    return render(request, 'registration/signupform.html', {'form': form})
 
 @login_required(login_url='/user/login/')
 def logTime(request):
@@ -18,6 +34,10 @@ def logTime(request):
         if form.is_valid():
             new_log = form.save(commit=False)
             new_log.user = request.user
+            if new_log.days == '1':
+                new_log.hours = 7.5
+            else:
+                new_log.hours = 3.75
             new_log.save()
             return HttpResponseRedirect(reverse('view-my-times'))
         else:
