@@ -3,37 +3,9 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import views
 from django.contrib.auth import get_user_model
-from .models import WorkDay, Project
-from .forms import WorkDayForm, CreateAccountForm
-
-class TimeTestUtils(object):
-
-    @staticmethod
-    def create_test_user():
-        """
-        Override this method to return an instance of your custom user model
-        """
-        user_model = get_user_model()
-        # Create a user
-        user_data = dict()
-        user_data[user_model.USERNAME_FIELD] = 'test@email.com'
-        user_data['password'] = 'password'
-
-        for field in user_model.REQUIRED_FIELDS:
-            user_data[field] = field
-
-        return user_model.objects.create_superuser(**user_data)
-
-    def login(self):
-        user = self.create_test_user()
-
-        user_model = get_user_model()
-        # Login
-        self.assertTrue(
-            self.client.login(password='password', **{user_model.USERNAME_FIELD: 'test@email.com'})
-        )
-
-        return user
+from app.models import WorkDay, Project
+from app.forms import WorkDayForm, CreateAccountForm
+from .utils import TimeTestUtils
 
 
 class TestWorkDay(TestCase):
@@ -159,6 +131,10 @@ class TestAccountCreation(TestCase):
         form.save()
         user = get_user_model().objects.get(username='test')
         self.assertEqual(user.username, 'test')
+
+    def test_form_display(self):
+        response = self.client.get("/signup/")
+        self.assertContains(response, "class='create_account_form'")
 
     def test_clean_password2(self):
         form = CreateAccountForm({
