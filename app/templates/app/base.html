@@ -8,7 +8,9 @@
   <link rel="stylesheet" type="text/css" href="{% static 'app/fonts/stylesheet.css' %}" charset="utf-8" />
   <link rel="stylesheet" type="text/css" href="{% static 'app/vendor/normalize.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'app/vendor/jquery-ui-1.11.4/jquery-ui.min.css' %}">
-  <link rel="stylesheet" type="text/css" href="{% static 'app/css/base.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'app/css/small.css' %}">
+  <link rel="stylesheet" type="text/css" media="(min-width: 700px)" href="{% static 'app/css/medium.css' %}">
+  <link rel="stylesheet" type="text/css" media="(min-width: 900px)" href="{% static 'app/css/large.css' %}">
 </head>
 <body>
   {% include 'app/includes/header.html' %}

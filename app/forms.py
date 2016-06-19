@@ -10,8 +10,8 @@ class WorkDayForm(forms.ModelForm):
         model = WorkDay
         fields = ['project', 'date', 'days']
         widgets = {
-            'date': forms.DateInput(format='%d/%m/%Y', attrs={'class': "date"}),
-            'project': forms.Select(attrs={'class': "project"}),
+            'date': forms.DateInput(format='%d/%m/%Y', attrs={'class': "date-field"}),
+            'project': forms.Select(attrs={'class': "project-field"}),
         }
 
 class CreateAccountForm(UserCreationForm):

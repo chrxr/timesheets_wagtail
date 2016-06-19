@@ -3,15 +3,15 @@
 
 
 {% block content %}
-<h1>Users view</h1>
-<p>Sort by: <a href='' id='date-sort'>date</a> | <a href='' id='project-sort'>project</a></p>
+<h1 class='page-title'>Users view</h1>
+<div class='sort-container'>Sort by: <a href='' id='date-sort'>date</a> | <a href='' id='project-sort'>project</a></div>
 
 {% include 'app/includes/filters.html' %}
 
 {% for user in users %}
   {% for name, time_set in user.items %}
-<h3>{{ name }}</h3>
-<table class='fixed-width'>
+<h3 class='table-title'>{{ name }}</h3>
+<table class='view-table'>
   <!-- <tr>
     <th colspan='4'></th>
   </tr> -->

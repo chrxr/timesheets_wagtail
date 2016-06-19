@@ -1,5 +1,5 @@
 {% if filters %}
-  <div class='filter-container'>
+  <div class='filter-container select-container'>
     {% for filter in filters %}
       <label for='{{ filter.name }}'>{{ filter.label }}: </label>
       <select name='{{ filter.name }}' id='filter-select'>
@@ -13,11 +13,13 @@
     <button id='filter-submit' value="Apply filter">Apply</button>
   </div>
   <div class='filter-container'>
-    <label for="datefrom">Date from: </label>
-    <input class='date' id="datefrom" name="datefrom" placeholder="yyyy-mm-dd" />
-    <label for="dateto">Date to: </label>
-    <input class='date' id="dateto" name="dateto" placeholder="yyyy-mm-dd" />
-    <button id='date-submit' value="Apply filter">Apply</button>
-    <a href='{{ request.path }}'>Clear filters</a>
+    <ul class='filter-list'>
+      <li><label for="datefrom">Date from: </label>
+          <input class='date-field' id="datefrom" name="datefrom" placeholder="yyyy-mm-dd" /></li>
+      <li><label for="dateto">Date to: </label>
+          <input class='date-field' id="dateto" name="dateto" placeholder="yyyy-mm-dd" /></li>
+      <li><button id='date-submit' value="Apply filter">Apply</button>
+          <a href='{{ request.path }}'>Clear filters</a></li>
+    </ul>
   </div>
 {% endif %}

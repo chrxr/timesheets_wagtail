@@ -1,0 +1,35 @@
+/*HEADER STYLES*/
+
+.header {
+    font-size:1em;
+    height:100px;
+}
+
+.header a {
+  padding:10px 20px;
+  text-transform: uppercase;
+}
+
+.header ul {
+  padding:40px 10px;
+}
+
+.header li {
+  margin-right:10px;
+}
+
+.logo {
+  height:100px;
+  margin-top:30px;
+}
+
+/*TABLE STYLES*/
+
+.form-frame {
+  margin: 50px auto;
+  width:800px;
+}
+
+.view-table {
+  width:100%;
+}

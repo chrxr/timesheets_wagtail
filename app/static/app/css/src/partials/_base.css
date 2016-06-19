@@ -1,0 +1,30 @@
+@import "colors";
+
+body {
+  font-family: 'pt_sansregular','arial';
+  background-color: $grey;
+}
+
+table {
+  border-collapse: collapse;
+  margin-bottom:1em;
+}
+
+table, th, td {
+  border:1px solid black;
+}
+
+td, th {
+  padding:8px;
+  background-color:#FFF;
+}
+
+th {
+  text-align:left;
+  background-color: $darkblue;
+  color:white;
+}
+
+p.error, .errorlist {
+  color:red;
+}

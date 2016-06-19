@@ -9,18 +9,18 @@
 {% if user.is_authenticated %}
 
     <li>Hi, {% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}!</li>
-    <li class='menu-item'><a href='{% url "log-time" %}'>LOG TIME</a></li>
-    <li class='menu-item'><a href='{% url "view-my-times" %}'>VIEW MY TIMES</a></li>
+    <li class='menu-item'><a href='{% url "log-time" %}'>Log time</a></li>
+    <li class='menu-item'><a href='{% url "view-my-times" %}'>View my times</a></li>
     {% for group in user.groups.all %}
       {% if group.name == "manager" %}
-        <li class='menu-item'><a href='{% url "projects-view" %}'>PROJECTS VIEW</a></li>
-        <li class='menu-item'><a href='{% url "users-view" %}'>USERS VIEW</a></li>
+        <li class='menu-item'><a href='{% url "projects-view" %}'>Projects view</a></li>
+        <li class='menu-item'><a href='{% url "users-view" %}'>Users view</a></li>
       {% endif %}
     {% endfor %}
-    <li class='menu-item'><a href='/user/logout'>LOGOUT</a></li>
+    <li class='menu-item'><a href='/user/logout'>Logout</a></li>
 {% else %}
-    <li class='menu-item'><a href='/user/login'>LOGIN</a></li>
-    <li class='menu-item'><a href='/signup'>SIGN UP</a></li>
+    <li class='menu-item'><a href='/user/login'>Login</a></li>
+    <li class='menu-item'><a href='/signup'>Sign up</a></li>
 {% endif %}
   </ul>
 </div>

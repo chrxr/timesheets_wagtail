@@ -2,13 +2,13 @@
 {% load static %}
 
 {% block content %}
-<h1>Projects view</h1>
+<h1 class='page-title'>Projects view</h1>
 
-<p>Sort by: <a href='' id='date-sort'>date</a> | <a href='' id='user-sort'>user</a></p>
+<div class='sort-container'>Sort by: <a href='' id='date-sort'>date</a> | <a href='' id='user-sort'>user</a></div>
 {% include 'app/includes/filters.html' %}
 {% for key, values in projects.items %}
-<h3>{{ key }}</h3>
-<table class='fixed-width'>
+<h3 class='table-title'>{{ key }}</h3>
+<table class='view-table'>
   <!-- <tr>
     <th colspan='3'></th>
   </tr> -->

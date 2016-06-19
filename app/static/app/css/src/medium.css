@@ -1,0 +1,95 @@
+/*HEADER STYLES*/
+
+.header {
+  width:100%;
+  background-color: $darkblue;
+  color:white;
+  height:80px;
+  /*font-size:0.85em;*/
+}
+
+.header a {
+  color:#FFF;
+  display:block;
+  text-decoration: none;
+  margin:0;
+  height:20px;
+  padding:10px 10px;
+}
+
+.menu-container {
+  float:left;
+}
+
+.header ul {
+  display:inline-block;
+  list-style: none;
+  margin:0;
+  padding:20px 10px;
+}
+
+.header li {
+  display:inline-block;
+  margin-right:5px;
+}
+
+.header li.menu-item {
+  display:inline-block;
+  margin:0;
+}
+
+.header li.menu-item:hover {
+  background-color: $lightblue;
+}
+
+.logo-container {
+  float:left;
+}
+
+.logo {
+  display:inline-block;
+  height:80px;
+  margin-top:20px;
+  margin-left:30px;
+}
+
+/* PAGE STYLES */
+
+ .page-title {
+   margin-left:0;
+ }
+
+/*TABLE STYLES*/
+
+.form-frame {
+  margin: 50px auto;
+  width: 600px;
+}
+
+.table-title {
+  margin-left:0;
+}
+
+/* FILTERS */
+
+.sort-container {
+  margin: 0;
+  margin-bottom:10px;
+}
+
+.filter-container {
+  width:100%;
+  /*height:30px;*/
+  padding-left:0;
+}
+
+ul.filter-list {
+  list-style:none;
+  display: inline-block;
+  margin:0;
+  padding:0;
+}
+
+ul.filter-list > li {
+  display: inline-block;
+}
