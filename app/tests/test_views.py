@@ -49,3 +49,40 @@ class TestProjectsView(TestCase, TimeTestUtils):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(first_date, times.first().date)
+
+    def test_unauthenticated_redirect(self):
+        self.client.logout()
+        response = self.client.get(reverse('projects-view'))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, "/user/login/?next=/projects-view/")
+
+
+class TestUserView(TestCase, TimeTestUtils):
+    fixtures = ['app']
+
+    def setUp(self):
+        self.login()
+
+    def test_user_view(self):
+
+        response = self.client.get(reverse('users-view'))
+        user_one = User.objects.filter(username='chrxr').first()
+        users = response.context['users']
+        users_in_context = []
+        for user in users:
+            users_in_context.append(user.username)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed('/app/viewusers.html')
+        self.assertIn(user_one.username, users_in_context)
+        self.assertNotIn("BLURGH", users_in_context)
+
+    def test_user_sort_project(self):
+        # Check that view returns times for each project ordered by users first name
+        response = self.client.get('/users-view/?sort=user')
+        times = WorkDay.objects.filter(user__username='chrxr').order_by('project__projectName')
+        view_users = response.context['users']
+        first_project = view_users['chrxr']['times'][0].user
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(first_user, times.first().user)

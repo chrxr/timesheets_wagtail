@@ -9,6 +9,7 @@ from .forms import WorkDayForm, CreateAccountForm
 from .models import WorkDay, Project
 import datetime
 import csv
+import operator
 # Create your views here.
 
 def createAccount(request):
@@ -150,18 +151,19 @@ def usersView(request):
     if user_filter != 'all':
         users = User.objects.filter(pk=user_filter)
     else:
-        users = User.objects.all()
+        users = User.objects.order_by('first_name')
+
     all_users = {}
     filter_list = User.objects.all()
+
     for user in users:
+
         times = WorkDay.objects.filter(user=user).order_by('date')
 
         if date_from_filter != '':
-            print date_from_filter
             times = times.filter(date__gt=date_from_filter)
 
         if date_to_filter != '':
-            print date_to_filter
             times = times.filter(date__lt=date_to_filter)
 
         sort = request.GET.get('sort', 'none')
@@ -169,7 +171,15 @@ def usersView(request):
             times = times.order_by('date')
         elif sort == 'project':
             times = times.order_by('project')
-        all_users[user] = times
+
+        if user.first_name and user.last_name:
+            username = user.first_name + ' ' + user.last_name
+        else:
+            username = user.username
+
+        all_users[username] = times
+
+        sorted_users = sorted(all_users.items())
 
     filters = [{"label": "User", "name": "user", "options": filter_list}]
 
