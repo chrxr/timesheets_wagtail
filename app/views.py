@@ -122,7 +122,7 @@ def projectsView(request):
             if sort == 'date':
                 times = times.order_by('date')
             elif sort == 'user':
-                times = times.order_by('user__first_name')
+                times = times.order_by('user__first_name', 'date')
             total_time = 0
             for time in times:
                 total_time += float(time.days)
@@ -153,7 +153,8 @@ def usersView(request):
     else:
         users = User.objects.order_by('first_name')
 
-    all_users = {}
+    # all_users is a list, so that it can retain the queryset order (rather than dict)
+    all_users = []
     filter_list = User.objects.all()
 
     for user in users:
@@ -170,16 +171,14 @@ def usersView(request):
         if sort == 'date':
             times = times.order_by('date')
         elif sort == 'project':
-            times = times.order_by('project')
+            times = times.order_by('project__projectName', 'date')
 
         if user.first_name and user.last_name:
             username = user.first_name + ' ' + user.last_name
         else:
             username = user.username
 
-        all_users[username] = times
-
-        sorted_users = sorted(all_users.items())
+        all_users.append({username: {"times":times}})
 
     filters = [{"label": "User", "name": "user", "options": filter_list}]
 

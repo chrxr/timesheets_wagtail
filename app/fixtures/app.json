@@ -3,16 +3,16 @@
     "model": "auth.user",
     "pk": 1,
     "fields": {
-        "password": "pbkdf2_sha256$24000$f67UcFqb5e4S$MeGS4fteUkFtAkGAhdyd6dCDwf2MEoc+7vgQpf40Vnc=",
-        "last_login": "2016-06-18T08:39:23.463Z",
+        "password": "pbkdf2_sha256$24000$FCGc22UA1p6q$G8OMTu+ors98lADVdU0Dw99arAexjVCAbTH5nnAkunw=",
+        "last_login": "2016-06-13T10:11:48.875Z",
         "is_superuser": true,
         "username": "chrxr",
         "first_name": "Chris",
         "last_name": "Rogers",
-        "email": "fskd@afklewf.com",
+        "email": "chrxr@outlook.com",
         "is_staff": true,
         "is_active": true,
-        "date_joined": "2016-06-09T15:40:47Z",
+        "date_joined": "2016-06-10T14:44:05Z",
         "groups": [],
         "user_permissions": []
     }
@@ -21,16 +21,16 @@
     "model": "auth.user",
     "pk": 2,
     "fields": {
-        "password": "pbkdf2_sha256$24000$FX5lg1JhwFAR$zXbc+5jHqhFWs900HaqhUC3v6VU8Jt1urdNkSVACwXA=",
-        "last_login": "2016-06-14T15:13:31.037Z",
+        "password": "pbkdf2_sha256$24000$dkKiwfWRDOMf$nEAVTi3yQM7XJ0eRUmhm2ybRfS4UfNmT0+8e30597CA=",
+        "last_login": "2016-06-13T10:11:39.378Z",
         "is_superuser": false,
-        "username": "a.dude",
-        "first_name": "A",
-        "last_name": "Dude",
-        "email": "a@dude.com",
-        "is_staff": true,
+        "username": "jo.gilder",
+        "first_name": "Jo",
+        "last_name": "Gilder",
+        "email": "jo.gilder@bodleian.ox.ac.uk",
+        "is_staff": false,
         "is_active": true,
-        "date_joined": "2016-06-10T12:00:18Z",
+        "date_joined": "2016-06-10T15:35:59Z",
         "groups": [],
         "user_permissions": []
     }
@@ -39,134 +39,63 @@
     "model": "app.project",
     "pk": 1,
     "fields": {
-        "projectName": "Talbot"
+        "projectName": "William Henry Fox Talbot Catalogue Raisonne"
     }
 },
 {
     "model": "app.project",
     "pk": 2,
     "fields": {
-        "projectName": "DMI"
+        "projectName": "Digital Miscellanies Index"
     }
 },
 {
-    "model": "app.workday",
-    "pk": 2,
-    "fields": {
-        "date": "2012-12-18",
-        "project": 1,
-        "hours": null,
-        "days": "1",
-        "user": 1
-    }
-},
-{
-    "model": "app.workday",
+    "model": "app.project",
     "pk": 3,
     "fields": {
-        "date": "2012-12-13",
-        "project": 1,
-        "hours": null,
-        "days": "1",
-        "user": 1
+        "projectName": "Cultures of Knowledge"
     }
 },
 {
-    "model": "app.workday",
+    "model": "app.project",
     "pk": 4,
     "fields": {
-        "date": "2012-12-13",
-        "project": 1,
-        "hours": null,
-        "days": "1",
-        "user": 1
+        "projectName": "Hebrew Catalogue"
     }
 },
 {
-    "model": "app.workday",
+    "model": "app.project",
     "pk": 5,
     "fields": {
-        "date": "2014-12-04",
-        "project": 2,
-        "hours": null,
-        "days": "1",
-        "user": 1
+        "projectName": "Digital Archivists Project"
     }
 },
 {
-    "model": "app.workday",
+    "model": "app.project",
     "pk": 6,
     "fields": {
-        "date": "2016-01-14",
-        "project": 2,
-        "hours": null,
-        "days": "1",
-        "user": 1
-    }
-},
-{
-    "model": "app.workday",
-    "pk": 7,
-    "fields": {
-        "date": "2016-10-06",
-        "project": 2,
-        "hours": null,
-        "days": "1",
-        "user": 2
-    }
-},
-{
-    "model": "app.workday",
-    "pk": 9,
-    "fields": {
-        "date": "2016-06-13",
-        "project": 1,
-        "hours": null,
-        "days": "1",
-        "user": 1
-    }
-},
-{
-    "model": "app.workday",
-    "pk": 10,
-    "fields": {
-        "date": "2016-06-13",
-        "project": 1,
-        "hours": null,
-        "days": "0.5",
-        "user": 1
+        "projectName": "15th Century Manuscripts"
     }
 },
 {
     "model": "app.workday",
     "pk": 11,
     "fields": {
-        "date": "2016-06-14",
-        "project": 2,
+        "date": "2016-12-06",
+        "project": 1,
         "hours": null,
         "days": "1",
-        "user": 2
+        "user": 1
     }
 },
 {
     "model": "app.workday",
     "pk": 12,
     "fields": {
-        "date": "2016-06-22",
+        "date": "2016-12-06",
         "project": 1,
         "hours": null,
         "days": "0.5",
-        "user": 2
-    }
-},
-{
-    "model": "app.workday",
-    "pk": 13,
-    "fields": {
-        "date": "2016-06-15",
-        "project": 2,
-        "hours": "7.50",
-        "days": "1",
         "user": 1
     }
 },
@@ -174,9 +103,9 @@
     "model": "app.workday",
     "pk": 14,
     "fields": {
-        "date": "2016-06-15",
-        "project": 1,
-        "hours": "7.50",
+        "date": "2016-12-06",
+        "project": 2,
+        "hours": null,
         "days": "1",
         "user": 1
     }
@@ -185,10 +114,65 @@
     "model": "app.workday",
     "pk": 15,
     "fields": {
-        "date": "2016-06-16",
-        "project": 2,
-        "hours": "7.50",
+        "date": "2016-12-06",
+        "project": 1,
+        "hours": null,
+        "days": "0.5",
+        "user": 2
+    }
+},
+{
+    "model": "app.workday",
+    "pk": 16,
+    "fields": {
+        "date": "2016-12-01",
+        "project": 3,
+        "hours": null,
         "days": "1",
+        "user": 2
+    }
+},
+{
+    "model": "app.workday",
+    "pk": 17,
+    "fields": {
+        "date": "2016-12-04",
+        "project": 1,
+        "hours": null,
+        "days": "1",
+        "user": 1
+    }
+},
+{
+    "model": "app.workday",
+    "pk": 18,
+    "fields": {
+        "date": "2016-12-16",
+        "project": 1,
+        "hours": null,
+        "days": "1",
+        "user": 1
+    }
+},
+{
+    "model": "app.workday",
+    "pk": 19,
+    "fields": {
+        "date": "2016-06-12",
+        "project": 2,
+        "hours": null,
+        "days": "1",
+        "user": 1
+    }
+},
+{
+    "model": "app.workday",
+    "pk": 20,
+    "fields": {
+        "date": "2016-06-15",
+        "project": 4,
+        "hours": null,
+        "days": "0.5",
         "user": 1
     }
 }

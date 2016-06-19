@@ -8,9 +8,9 @@
 
 {% include 'app/includes/filters.html' %}
 
-{% for key, value in users.items %}
-
-<h3>{{ key }}</h3>
+{% for user in users %}
+  {% for name, time_set in user.items %}
+<h3>{{ name }}</h3>
 <table class='fixed-width'>
   <!-- <tr>
     <th colspan='4'></th>
@@ -20,14 +20,16 @@
     <th>Project</th>
     <th>Days</th>
   </tr>
-  {% for time in value %}
+  {% for key, times in time_set.items %}
+    {% for time in times %}
+    <tr>
+      <td>{{ time.date }}</td>
+      <td>{{ time.project }}</td>
+      <td>{{ time.days }}</td>
 
-  <tr>
-    <td>{{ time.date }}</td>
-    <td>{{ time.project }}</td>
-    <td>{{ time.days }}</td>
-
-  </tr>
+    </tr>
+    {% endfor %}
+  {% endfor %}
   {% endfor %}
 </table>
 {% endfor %}

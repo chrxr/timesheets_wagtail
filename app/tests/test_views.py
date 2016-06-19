@@ -15,8 +15,8 @@ class TestProjectsView(TestCase, TimeTestUtils):
 
     def test_fixtures(self):
         user = get_user_model().objects.get(username="chrxr")
-        project = Project.objects.get(projectName="Talbot")
-        self.assertEqual(project.projectName, "Talbot")
+        project = Project.objects.get(projectName="Digital Miscellanies Index")
+        self.assertEqual(project.projectName, "Digital Miscellanies Index")
         self.assertEqual(user.username, "chrxr")
 
     def test_project_view(self):
@@ -33,9 +33,9 @@ class TestProjectsView(TestCase, TimeTestUtils):
     def test_project_sort_user(self):
         # Check that view returns times for each project ordered by users first name
         response = self.client.get('/projects-view/?sort=user')
-        times = WorkDay.objects.filter(project__projectName='Talbot').order_by('user__first_name')
+        times = WorkDay.objects.filter(project__projectName='Digital Miscellanies Index').order_by('user__first_name')
         view_projects = response.context['projects']
-        first_user = view_projects['Talbot']['times'][0].user
+        first_user = view_projects['Digital Miscellanies Index']['times'][0].user
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(first_user, times.first().user)
@@ -43,9 +43,9 @@ class TestProjectsView(TestCase, TimeTestUtils):
     def test_project_sort_date(self):
         # Check that view returns times for each project ordered by date
         response = self.client.get('/projects-view/?sort=date')
-        times = WorkDay.objects.filter(project__projectName='Talbot').order_by('date')
+        times = WorkDay.objects.filter(project__projectName='Digital Miscellanies Index').order_by('date')
         view_projects = response.context['projects']
-        first_date = view_projects['Talbot']['times'][0].date
+        first_date = view_projects['Digital Miscellanies Index']['times'][0].date
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(first_date, times.first().date)
@@ -66,23 +66,49 @@ class TestUserView(TestCase, TimeTestUtils):
     def test_user_view(self):
 
         response = self.client.get(reverse('users-view'))
-        user_one = User.objects.filter(username='chrxr').first()
         users = response.context['users']
         users_in_context = []
         for user in users:
-            users_in_context.append(user.username)
+            users_in_context.append(user)
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed('/app/viewusers.html')
-        self.assertIn(user_one.username, users_in_context)
+        # When user first / lastname is not entered, username is displayed
+        self.assertContains(response, "test@email.com")
+        # When user has first / lastname entered, full name is displayed
+        self.assertContains(response, "Chris Rogers")
         self.assertNotIn("BLURGH", users_in_context)
 
     def test_user_sort_project(self):
-        # Check that view returns times for each project ordered by users first name
+        # Check that view returns times for each user ordered by project name
         response = self.client.get('/users-view/?sort=user')
         times = WorkDay.objects.filter(user__username='chrxr').order_by('project__projectName')
         view_users = response.context['users']
-        first_project = view_users['chrxr']['times'][0].user
+
+        for user in view_users:
+            for key, value in user.items():
+                if key == "Chris Rogers":
+                    first_project_name = value['times'][0].project
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(first_user, times.first().user)
+        self.assertEqual(first_project_name, times.first().project)
+
+    def test_user_sort_date(self):
+        # Check that view returns times for each user ordered by project name
+        response = self.client.get('/users-view/?sort=date')
+        times = WorkDay.objects.filter(user__username='chrxr').order_by('date')
+        view_users = response.context['users']
+
+        for user in view_users:
+            for key, value in user.items():
+                if key == "Chris Rogers":
+                    first_date = value['times'][0].date
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(first_date, times.first().date)
+
+    def test_unauthenticated_redirect(self):
+        self.client.logout()
+        response = self.client.get(reverse('users-view'))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, "/user/login/?next=/users-view/")
