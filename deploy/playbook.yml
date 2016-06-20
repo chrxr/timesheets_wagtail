@@ -73,12 +73,6 @@
         accept_hostkey=True
         update=yes
 
-    - name: clone blog github repo
-      git: repo=git@github.com:chrxr/blog_project.git
-        dest="{{ django_dir }}/blog_project"
-        accept_hostkey=True
-        update=yes
-
     - name: copy postgresql access config
       template: src=pg_hba.conf dest=/etc/postgresql/9.3/main/pg_hba.conf
       notify:
