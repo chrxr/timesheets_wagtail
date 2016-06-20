@@ -1,14 +1,14 @@
 var filters_on_load = deconstructURL(),
-    filter_submit = document.getElementById("filter-submit"),
     date_submit = document.getElementById("date-submit"),
-    main_filter = [document.getElementById("filter-select")],
-    date_filters = [document.getElementById("datefrom"),document.getElementById("dateto")],
+    main_filter = document.getElementById("filter-select"),
+    date_from_filter = document.getElementById("datefrom"),
+    date_to_filter = document.getElementById("dateto"),
     date_sort = document.getElementById("date-sort"),
     user_sort = document.getElementById("user-sort"),
     project_sort = document.getElementById("project-sort");
 
 if (filters_on_load) {
-  preFillFilters(filters_on_load, main_filter, date_filters);
+  preFillFilters(filters_on_load, main_filter, date_from_filter, date_to_filter);
 }
 
 if (date_sort){
@@ -23,22 +23,21 @@ if (project_sort) {
   project_sort.addEventListener("click", function(event){sortAction(event, "project");}, false);
 }
 
-filter_submit.addEventListener("click", function(){submitFilter(main_filter);}, false);
-date_submit.addEventListener("click", function(){submitFilter(date_filters);}, false);
+date_submit.addEventListener("click", function(){submitFilter([main_filter, date_from_filter, date_to_filter]);}, false);
 
-function preFillFilters(filters_on_load, main_filter, date_filters) {
+function preFillFilters(filters_on_load, main_filter, date_from_filter, date_to_filter) {
   if (filters_on_load.project || filters_on_load.user) {
-    for (i = 0; i < main_filter[0].options.length; i = i+1) {
-        if (main_filter[0].options[i].value === filters_on_load.project || main_filter[0].options[i].value === filters_on_load.user) {
-            main_filter[0].options[i].selected = true;
+    for (i = 0; i < main_filter.options.length; i = i+1) {
+        if (main_filter.options[i].value === filters_on_load.project || main_filter.options[i].value === filters_on_load.user) {
+            main_filter.options[i].selected = true;
         }
     }
   }
   if (filters_on_load.datefrom) {
-    date_filters[0].value = filters_on_load.datefrom;
+    date_from_filter.value = filters_on_load.datefrom;
   }
   if (filters_on_load.dateto) {
-    date_filters[1].value = filters_on_load.dateto;
+    date_to_filter.value = filters_on_load.dateto;
   }
 }
 
