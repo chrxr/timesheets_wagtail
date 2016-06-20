@@ -30,6 +30,14 @@ def createAccount(request):
 
 @login_required(login_url='/user/login/')
 def logTime(request):
+    date_today = datetime.date.today()
+    day_today = datetime.date.weekday(date_today)
+    week_beginning = date_today - datetime.timedelta(days=day_today)
+    week_ending = week_beginning + datetime.timedelta(days=(5-day_today))
+
+    weekly_times = WorkDay.objects.filter(date__gte=week_beginning, date__lte=week_ending, user=request.user)
+    print(weekly_times)
+
     if request.method == 'POST':
         form = WorkDayForm(request.POST, instance=WorkDay())
         if form.is_valid():
@@ -45,7 +53,7 @@ def logTime(request):
             return render(request, 'app/workdayform.html', {'form': form})
     else:
         form = WorkDayForm(initial={'date': datetime.date.today().isoformat()}, instance=WorkDay())
-    return render(request, 'app/workdayform.html', {'form': form})
+    return render(request, 'app/workdayform.html', {'form': form, 'times': weekly_times})
 
 
 @login_required(login_url='/user/login/')
@@ -53,7 +61,7 @@ def viewMyTimes(request):
     logged_in_user = request.user
     current_filters = getFilters(request)
     filter_list = Project.objects.all()
-    times = WorkDay.objects.filter(user=logged_in_user)
+    times = WorkDay.objects.filter(user=logged_in_user).order_by('date')
 
     if times:
         if current_filters['project'] != 'all':
@@ -113,10 +121,10 @@ def projectsView(request):
         if times:
 
             if current_filters['date_from'] != '':
-                times = times.filter(date__gt=current_filters['date_from'])
+                times = times.filter(date__gte=current_filters['date_from'])
 
             if current_filters['date_to'] != '':
-                times = times.filter(date__lt=current_filters['date_to'])
+                times = times.filter(date__lte=current_filters['date_to'])
 
             sort = request.GET.get('sort', 'none')
             if sort == 'date':
@@ -162,10 +170,10 @@ def usersView(request):
         times = WorkDay.objects.filter(user=user).order_by('date')
 
         if date_from_filter != '':
-            times = times.filter(date__gt=date_from_filter)
+            times = times.filter(date__gte=date_from_filter)
 
         if date_to_filter != '':
-            times = times.filter(date__lt=date_to_filter)
+            times = times.filter(date__lte=date_to_filter)
 
         sort = request.GET.get('sort', 'none')
         if sort == 'date':

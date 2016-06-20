@@ -21,7 +21,7 @@
         - postgresql-server-dev-9.3
         - postgresql-9.3-postgis-2.1
         - nginx
-        - redis-server
+        # - redis-server
 
     - name: install common packages for python application development
       apt: pkg={{item}} state=latest
@@ -30,30 +30,30 @@
         - python-pip
         - python-psycopg2
         - python-virtualenv
-        - libxml2-dev
-        - libxslt1-dev
+        # - libxml2-dev
+        # - libxslt1-dev
 
 ### FIREWALL STUFF
 
-    - name: install security packages
-      apt: pkg={{item}} state=latest
-      with_items:
-        - iptables-persistent
-
-    - name: copy iptablesv4 rules
-      template: src=iptables/iptables4 dest=/etc/iptables/rules.v4
-
-    - name: check iptablesv4 is valid
-      command: sudo iptables-restore -t /etc/iptables/rules.v4
-
-    - name: copy iptablesv6 rules
-      template: src=iptables/iptables6 dest=/etc/iptables/rules.v6
-
-    - name: check iptablesv6 is valid
-      command: sudo iptables-restore -t /etc/iptables/rules.v6
-
-    - name: Reload iptables
-      command: sudo service iptables-persistent reload
+    # - name: install security packages
+    #   apt: pkg={{item}} state=latest
+    #   with_items:
+    #     - iptables-persistent
+    #
+    # - name: copy iptablesv4 rules
+    #   template: src=iptables/iptables4 dest=/etc/iptables/rules.v4
+    #
+    # - name: check iptablesv4 is valid
+    #   command: sudo iptables-restore -t /etc/iptables/rules.v4
+    #
+    # - name: copy iptablesv6 rules
+    #   template: src=iptables/iptables6 dest=/etc/iptables/rules.v6
+    #
+    # - name: check iptablesv6 is valid
+    #   command: sudo iptables-restore -t /etc/iptables/rules.v6
+    #
+    # - name: Reload iptables
+    #   command: sudo service iptables-persistent reload
 
 #### END FIREWALL STUFF
 

@@ -3,9 +3,10 @@
 
 {% block content %}
 <h1 class='page-title'>Projects view</h1>
-
-<div class='sort-container'>Sort by: <a href='' id='date-sort'>date</a> | <a href='' id='user-sort'>user</a></div>
-{% include 'app/includes/filters.html' %}
+<div class='filter-frame'>
+  <div class='sort-container'>Sort by: <a href='' id='date-sort'>date</a> | <a href='' id='user-sort'>user</a></div>
+  {% include 'app/includes/filters.html' %}
+</div>
 {% for key, values in projects.items %}
 <h3 class='table-title'>{{ key }}</h3>
 <table class='view-table'>

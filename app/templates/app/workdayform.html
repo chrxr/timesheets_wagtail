@@ -3,6 +3,7 @@
 {% load static %}
 
 {% block content %}
+<div class='filter-frame'>
 <form method="post">
     {% csrf_token %}
     {% if form.date.errors %}
@@ -14,10 +15,34 @@
     {% if form.days.errors %}
       <p class='error'>{{ form.days.label }}{{ form.days.errors }}</p>
     {% endif %}
-    <p>On {{ form.date }} I worked on {{ form.project }} for {{ form.days }}.</p>
+    <p><span class='logging-sentence'>On {{ form.date }}</span>
+      <span class='logging-sentence'>I worked on {{ form.project }}</span>
+        <span class='logging-sentence'>for {{ form.days }}</span></p>
 
-    <input type="submit" value="Submit" />
+    <input class='logging-submit' type="submit" value="Submit" />
 </form>
+</div>
+<h1 class='page-title'>My times this week</h1>
+
+<table class='view-table'>
+  <tr>
+    <th>Date</th>
+    <th>Project</th>
+    <th>Days</th>
+    <th>Edit</th>
+    <th>Delete</th>
+  </tr>
+{% for time in times %}
+
+<tr>
+  <td>{{ time.date }}</td>
+  <td>{{ time.project }}</td>
+  <td>{{ time.days }}</td>
+  <td><a href='{% url 'edit-time' time.pk %}'>Edit</a></td>
+  <td><a href='{% url 'delete-time' time.pk %}'>Delete</a></td>
+</tr>
+
+{% endfor %}
 
 {% endblock %}
 
