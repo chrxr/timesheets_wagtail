@@ -4,6 +4,8 @@ from .base import *
 
 DEBUG = False
 
+ALLOWED_HOSTS = ['chrxr.com']
+
 try:
     from .local import *
 except ImportError:
