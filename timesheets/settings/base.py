@@ -80,6 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'timesheets',
         'USER': 'postgres',
+        'HOST': 'localhost',
         'PASSWORD': '',
     }
 }
