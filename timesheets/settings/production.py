@@ -4,7 +4,7 @@ from .base import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['chrxr.com', 'localhost']
+ALLOWED_HOSTS = ['*', 'timesheets-qa.bodleian.ox.ac.uk', 'localhost']
 
 LOGGING = {
     'version': 1,
