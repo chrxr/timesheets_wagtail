@@ -27,6 +27,13 @@
         {% endif %}
     </tr>
     <tr>
+        <td>{{ form.last_name.label_tag }}</td>
+        <td>{{ form.last_name }}</td>
+        {% if form.last_name.errors %}
+        <td>{{ form.last_name.errors }}</td>
+        {% endif %}
+    </tr>
+    <tr>
         <td>{{ form.password1.label_tag }}</td>
         <td>{{ form.password1 }}</td>
         {% if form.password1.errors %}
