@@ -1,7 +1,5 @@
 Installation notes
 
-Install pip (get-pip.py)
-
 Sudo yum install sudo yum install python-pip python-devel gcc postgresql-server postgresql-devel postgresql-contrib
 
 sudo service postgresql-setup initdb
@@ -10,4 +8,10 @@ sudo service postgresql start
 
 Replace pg_hba.conf (/var/lib/pgsql/data/pg_hba.conf)
 
-Install new version of python using buildout instructions
+#### TO DO:
+
+* Add in local python install
+* Add in changes to apache config (changing user to be bodl2685)
+* Buildout script for deploying to production
+* Confluence documentation
+* Move repo to Gitlab

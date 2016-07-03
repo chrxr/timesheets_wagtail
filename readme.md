@@ -1,6 +1,6 @@
 ## Timesheet application
 
-This is a Django application to manage the recording of developer time on projects.
+This is a Django 1.8 application to manage the recording of developer time on projects.
 
 ### Dependencies
 
@@ -42,3 +42,9 @@ This is a Django application to manage the recording of developer time on projec
     ./configure --with-python=/home/bodl2685/python/2.7.10/bin/python
     LD_RUN_PATH=~/python/2.7.10/lib make
     sudo make install
+
+### Definition of up
+
+* Postgres running
+* Apache httpd running
+* Timesheets homepage visible at timesheets-qa.bodleian.ox.ac.uk
