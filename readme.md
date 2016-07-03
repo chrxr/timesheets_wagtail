@@ -21,7 +21,7 @@ This is a Django application to manage the recording of developer time on projec
 * `./manage.py createsuperuser`
 * `./manage.py runserver`
 
-### Deploying changes
+### Deploying repo to production
 
 * In fabfile.py, replace the username in 'bodl2685@timesheets-qa.bodleian.ox.ac.uk' with your own Connect username
-* `fab deploy` (whilst in the virtualenv, from the project root i.e. timesheets-app/timesheets)
+* `fab deploy` (whilst in the virtualenv, from the directory containing the fab file)
