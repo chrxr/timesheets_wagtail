@@ -40,7 +40,7 @@ This is a Django 1.8 application to manage the recording of developer time on pr
     tar xvfz mod_wsgi-3.4.tar.gz
     cd mod_wsgi-3.4
     ./configure --with-python=/home/bodl2685/python/2.7.10/bin/python
-    LD_RUN_PATH=~/python/2.7.10/lib make
+    LD_RUN_PATH=/home/bodl2685/python/2.7.10/lib make
     sudo make install
 
 ### Definition of up
