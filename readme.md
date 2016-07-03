@@ -2,6 +2,11 @@
 
 This is a Django application to manage the recording of developer time on projects.
 
+### Dependencies
+
+* Python 2.7+
+* Postgres
+
 ### Creating a local build
 
 * `pip install virtualenv`
