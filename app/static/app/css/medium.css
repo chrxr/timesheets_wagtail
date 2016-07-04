@@ -37,15 +37,6 @@ p.error, .errorlist {
   /*font-size:0.85em;*/
 }
 
-.header a {
-  color:#FFF;
-  display:block;
-  text-decoration: none;
-  margin:0;
-  height:20px;
-  padding:10px 10px;
-}
-
 .menu-container {
   float:left;
   margin-left:130px;

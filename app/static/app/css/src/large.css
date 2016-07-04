@@ -5,7 +5,7 @@
     height:100px;
 }
 
-.header a {
+.menu-item a {
   padding:10px 20px;
   text-transform: uppercase;
 }

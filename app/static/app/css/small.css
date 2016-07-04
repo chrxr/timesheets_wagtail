@@ -37,14 +37,21 @@ p.error, .errorlist {
   /*font-size:0.85em;*/
 }
 
-.header a {
+.menu-item a {
   color:#FFF;
   display:block;
   text-decoration: none;
   margin:0;
   height:20px;
-  padding:10px 10px;
+  padding:10px;
 }
+
+.logo-link {
+  padding:0;
+  margin:0;
+  height:auto;
+}
+
 
 .menu-container {
   float:left;
@@ -75,6 +82,7 @@ p.error, .errorlist {
   margin:0;
   padding:10px;
   height:25px;
+  display: block;
 }
 
 .mobile-menu-icon a:hover {
