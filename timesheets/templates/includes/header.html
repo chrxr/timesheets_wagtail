@@ -1,0 +1,56 @@
+{% load static %}
+
+<div class='header'>
+  <div class='logo-container'>
+  <img class='logo' src='{% static "app/images/ox_brand1_rev.gif" %}' />
+  </div>
+
+  <!-- DESKTOP MENU -->
+  <div class='menu-container'>
+  <ul>
+{% if user.is_authenticated %}
+
+    <li>Hi, {% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}!</li>
+    <li class='menu-item'><a href='{% url "log-time" %}'>Log time</a></li>
+    <li class='menu-item'><a href='{% url "view-my-times" %}'>View my times</a></li>
+    {% for group in user.groups.all %}
+      {% if group.name == "manager" %}
+        <li class='menu-item'><a href='{% url "projects-view" %}'>Projects view</a></li>
+        <li class='menu-item'><a href='{% url "users-view" %}'>Users view</a></li>
+      {% endif %}
+    {% endfor %}
+    <li class='menu-item'><a href='/user/logout'>Logout</a></li>
+{% else %}
+    <li class='menu-item'><a href='/user/login'>Login</a></li>
+    <li class='menu-item'><a href='/signup'>Sign up</a></li>
+{% endif %}
+  </ul>
+</div>
+
+<!-- MOBILE MENU -->
+
+<div class='mobile-menu-icon'>
+  <a id='mobile-menu-button'><i class="fa fa-bars" aria-hidden="true"></i> Menu</a>
+</div>
+</div>
+<div id='mobile-menu-container' class='mobile-menu-container'>
+  <ul class='mobile-menu-list'>
+{% if user.is_authenticated %}
+
+    <li class='mobile-menu-item mobile-menu-user'>Hi, {% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}!</li>
+    <li class='mobile-menu-item'><a href='{% url "log-time" %}'>Log time</a></li>
+    <li class='mobile-menu-item'><a href='{% url "view-my-times" %}'>View my times</a></li>
+    {% for group in user.groups.all %}
+      {% if group.name == "manager" %}
+        <li class='mobile-menu-item'><a href='{% url "projects-view" %}'>Projects view</a></li>
+        <li class='mobile-menu-item'><a href='{% url "users-view" %}'>Users view</a></li>
+      {% endif %}
+    {% endfor %}
+    <li class='mobile-menu-item'><a href='/user/logout'>Logout</a></li>
+{% else %}
+    <li class='mobile-menu-item'><a href='/user/login'>Login</a></li>
+    <li class='mobile-menu-item'><a href='/signup'>Sign up</a></li>
+{% endif %}
+  </ul>
+
+</div>

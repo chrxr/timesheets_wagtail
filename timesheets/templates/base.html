@@ -1,0 +1,38 @@
+{% load static wagtailuserbar %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.ico' %}"/>
+  <title>{% block title %}{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}{% endblock %}{% if page.url != '/' %}{% block title_suffix %} | Timesheets.com{% endblock %}{% endif %}</title>
+  <meta name="description" content="{% if self.search_description %}{{ self.search_description }}{% endif %}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://use.fontawesome.com/2bf2e8221e.js"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'app/fonts/stylesheet.css' %}" charset="utf-8" />
+  <link rel="stylesheet" type="text/css" href="{% static 'app/vendor/normalize.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'app/vendor/jquery-ui-1.11.4/jquery-ui.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'app/css/small.css' %}">
+  <link rel="stylesheet" type="text/css" media="(min-width: 710px)" href="{% static 'app/css/medium.css' %}">
+  <link rel="stylesheet" type="text/css" media="(min-width: 900px)" href="{% static 'app/css/large.css' %}">
+</head>
+<body>
+  {% if page %}
+    {% wagtailuserbar %}
+  {% endif %}
+  
+  {% include 'includes/header.html' %}
+  <div class='form-frame'>
+  {% block content %}
+  {% endblock %}
+</div>
+
+<script src="{% static 'app/vendor/jquery/jquery-3.0.0.min.js' %}"></script>
+<script src="{% static 'app/vendor/jquery-ui-1.11.4/jquery-ui.min.js' %}"></script>
+<script src="{% static 'app/js/main.js' %}"></script>
+
+{% block extra_js %}
+{% endblock %}
+</body>
+</html>

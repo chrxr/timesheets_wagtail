@@ -1,8 +1,9 @@
-{% extends "app/base.html" %}
+{% extends base_template|default:"base.html" %}
+
 
 {% load static %}
 
-{% block pagetitle %}Log some time yo!{% endblock %}
+{% block title %}Log some time yo!{% endblock %}
 
 {% block content %}
 <div class='filter-frame'>

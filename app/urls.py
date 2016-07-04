@@ -5,7 +5,7 @@ from django.contrib.auth import views as auth_views
 from . import views
 
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name='app/home.html'), name='home'),
+    # url(r'^$', TemplateView.as_view(template_name='app/home.html'), name='home'),
     url(r'^user/logout/$', auth_views.logout, {'template_name': 'app/home.html'}, name='logout'),
     # Login and other user auth views provided by django built-in module
     url(r'^user/', include('django.contrib.auth.urls')),
