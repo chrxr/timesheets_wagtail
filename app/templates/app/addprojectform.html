@@ -1,0 +1,17 @@
+{% extends base_template|default:"base.html" %}
+
+{% load static %}
+
+{% block title %}Add a project{% endblock %}
+
+{% block content %}
+
+<h1 class='page-title'>Add a new project</h1>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form }}
+  <input class='project-submit' type="submit" value="Submit" />
+
+</form>
+{% endblock %}

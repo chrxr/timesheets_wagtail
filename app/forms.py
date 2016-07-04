@@ -1,5 +1,5 @@
 from django import forms
-from .models import WorkDay
+from .models import WorkDay, Project
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import gettext as _
@@ -13,6 +13,11 @@ class WorkDayForm(forms.ModelForm):
             'date': forms.DateInput(format='%d/%m/%Y', attrs={'class': "date-field"}),
             'project': forms.Select(attrs={'class': "project-field"}),
         }
+
+class AddProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = ['projectName']
 
 class CreateAccountForm(UserCreationForm):
     error_messages = {

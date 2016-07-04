@@ -17,4 +17,5 @@ urlpatterns = [
     url(r'^users-view/$', views.usersView, name='users-view'),
     url(r'^get-project-csv/$', views.getProjectCSV, name='get-project-csv'),
     url(r'^signup/$', views.createAccount, name='create-account'),
+    url(r'^add-project/$', views.addProject, name='add-project'),
 ]

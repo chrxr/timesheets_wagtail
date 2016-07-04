@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.contrib.auth import views, authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .forms import WorkDayForm, CreateAccountForm
+from .forms import WorkDayForm, CreateAccountForm, AddProjectForm
 from .models import WorkDay, Project
 import datetime
 import csv
@@ -54,6 +54,19 @@ def logTime(request):
     else:
         form = WorkDayForm(initial={'date': datetime.date.today().isoformat()}, instance=WorkDay())
     return render(request, 'app/workdayform.html', {'form': form, 'times': weekly_times})
+
+@login_required(login_url='/user/login/')
+def addProject(request):
+    if request.method == 'POST':
+        form = AddProjectForm(request.POST, instance=Project())
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('log-time'))
+        else:
+            return render(request, 'app/addprojectform.html', {'form': form})
+    else:
+        form = AddProjectForm(instance=Project())
+    return render(request, 'app/addprojectform.html', {'form': form})
 
 
 @login_required(login_url='/user/login/')
@@ -148,7 +161,6 @@ def projectsView(request):
                 'date_to': current_filters['date_to'],
                 'date_from': current_filters['date_from']
                 })
-
 
 @login_required(login_url='/user/login/')
 def usersView(request):
