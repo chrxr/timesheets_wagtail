@@ -21,8 +21,13 @@ User.add_to_class("__str__", get_full_name)
 class Project(models.Model):
     projectName = models.CharField("Project name", max_length=255)
 
+    class Meta:
+        ordering = ['projectName']
+
     def __str__(self):
         return (self.projectName)
+
+
 
 class WorkDay(models.Model):
     date = models.DateField("Date")
