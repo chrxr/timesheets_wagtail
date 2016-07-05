@@ -75,6 +75,11 @@ def addProject(request):
         form = AddProjectForm(instance=Project())
     return render(request, 'app/addprojectform.html', {'form': form})
 
+@login_required(login_url='/user/login/')
+def myProjects(request):
+    projects = Project.objects.filter(owner=request.user)
+    return render(request, 'app/myprojects.html', {'projects':projects})
+
 
 @login_required(login_url='/user/login/')
 def viewMyTimes(request):

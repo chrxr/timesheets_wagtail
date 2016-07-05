@@ -1,0 +1,15 @@
+{% extends base_template|default:"base.html" %}
+
+{% load static %}
+
+{% block title %}My projects{% endblock %}
+
+{% block content %}
+
+<ul>
+{% for project in projects %}
+<li>{{ project.projectName }}</li>
+{% endfor %}
+</ul>
+
+{% endblock %}
