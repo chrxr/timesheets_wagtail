@@ -6,7 +6,7 @@ from . import views
 
 urlpatterns = [
     # url(r'^$', TemplateView.as_view(template_name='app/home.html'), name='home'),
-    url(r'^user/logout/$', auth_views.logout, {'template_name': 'app/home.html'}, name='logout'),
+    url(r'^user/logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
     # Login and other user auth views provided by django built-in module
     url(r'^user/', include('django.contrib.auth.urls')),
     url(r'^logtime/$', views.logTime, name='log-time'),

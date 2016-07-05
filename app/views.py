@@ -10,7 +10,12 @@ from .models import WorkDay, Project
 import datetime
 import csv
 import operator
-# Create your views here.
+
+# TO DO:
+# * DONE - Make the menu smaller by moving project and user view into one item
+# * Make a "Settings" menu where projects can be added, and change user details
+# * Add 'User' to projects model so that Projects can be limited to accounts
+# * Investigate emailing alerts, password reset etc
 
 def createAccount(request):
     if request.method == 'POST':
@@ -60,7 +65,9 @@ def addProject(request):
     if request.method == 'POST':
         form = AddProjectForm(request.POST, instance=Project())
         if form.is_valid():
-            form.save()
+            new_project = form.save(commit=False)
+            new_project.owner = request.user
+            new_project.save()
             return HttpResponseRedirect(reverse('log-time'))
         else:
             return render(request, 'app/addprojectform.html', {'form': form})

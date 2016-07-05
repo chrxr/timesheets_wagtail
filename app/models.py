@@ -20,6 +20,7 @@ User.add_to_class("__str__", get_full_name)
 
 class Project(models.Model):
     projectName = models.CharField("Project name", max_length=255)
+    owner = models.ForeignKey(User, blank=True, null=True)
 
     class Meta:
         ordering = ['projectName']

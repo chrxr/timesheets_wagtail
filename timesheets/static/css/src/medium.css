@@ -1,37 +1,10 @@
-body {
-  font-family:'pt_sansregular','arial';
-  background-color:#f3f1ec;
-}
-
-table {
-  border-collapse:collapse;
-  margin-bottom:1em;
-}
-
-table, th, td {
-  border:1px solid black;
-}
-
-td, th {
-  padding:8px;
-  background-color:#FFF;
-}
-
-th {
-  text-align:left;
-  background-color:#002147;
-  color:white;
-}
-
-p.error, .errorlist {
-  color:red;
-}
+@import "partials/base";
 
 /*HEADER STYLES*/
 
 .header {
   width:100%;
-  background-color: #002147;
+  background-color: $darkblue;
   color:white;
   height:80px;
 }
@@ -60,7 +33,7 @@ p.error, .errorlist {
 }
 
 .header li.menu-item:hover {
-  background-color: #3277ae;
+  background-color: $lightblue;
 }
 
 .logo-container {
@@ -84,9 +57,10 @@ p.error, .errorlist {
 
 /* PAGE STYLES */
 
- .page-title {
+ .page-title, .view-switch {
    margin-left:0;
  }
+
 
 /*TABLE STYLES*/
 

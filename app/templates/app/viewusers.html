@@ -6,6 +6,7 @@
 
 {% block content %}
 <h1 class='page-title'>Users view</h1>
+<p class='view-switch'><a href='{% url "projects-view" %}'>or view by Project</a></p>
 <div class='filter-frame'>
   <div class='sort-container'>Sort by: <a href='' id='date-sort'>date</a> | <a href='' id='project-sort'>project</a></div>
   {% include 'app/includes/filters.html' %}
