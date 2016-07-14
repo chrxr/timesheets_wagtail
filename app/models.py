@@ -28,7 +28,9 @@ class Project(models.Model):
     def __str__(self):
         return (self.projectName)
 
-
+class Contributor(models.Model):
+    project = models.ForeignKey(Project)
+    contributor = models.ForeignKey(User)
 
 class WorkDay(models.Model):
     date = models.DateField("Date")

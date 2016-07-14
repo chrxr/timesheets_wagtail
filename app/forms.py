@@ -1,5 +1,5 @@
 from django import forms
-from .models import WorkDay, Project
+from .models import WorkDay, Project, Contributor
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import gettext as _
@@ -18,6 +18,11 @@ class AddProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ['projectName']
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user','')
+        super(AddProjectForm, self).__init__(*args, **kwargs)
+        self.fields['contributors']=forms.ModelMultipleChoiceField(queryset=User.objects.all())
 
 class CreateAccountForm(UserCreationForm):
     error_messages = {

@@ -6,16 +6,16 @@ from django.contrib.auth import views, authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import WorkDayForm, CreateAccountForm, AddProjectForm
-from .models import WorkDay, Project
+from .models import WorkDay, Project, Contributor
 import datetime
 import csv
 import operator
 
 # TO DO:
-# * DONE - Make the menu smaller by moving project and user view into one item
-# * Make a "Settings" menu where projects can be added, and change user details
-# * Add 'User' to projects model so that Projects can be limited to accounts
+# * Add view for editing projects
 # * Investigate emailing alerts, password reset etc
+
+login_url = '/user/login/'
 
 def createAccount(request):
     if request.method == 'POST':
@@ -33,7 +33,7 @@ def createAccount(request):
 
     return render(request, 'registration/signupform.html', {'form': form})
 
-@login_required(login_url='/user/login/')
+@login_required(login_url=login_url)
 def logTime(request):
     date_today = datetime.date.today()
     day_today = datetime.date.weekday(date_today)
@@ -41,7 +41,6 @@ def logTime(request):
     week_ending = week_beginning + datetime.timedelta(days=(5-day_today))
 
     weekly_times = WorkDay.objects.filter(date__gte=week_beginning, date__lte=week_ending, user=request.user)
-    print(weekly_times)
 
     if request.method == 'POST':
         form = WorkDayForm(request.POST, instance=WorkDay())
@@ -60,7 +59,7 @@ def logTime(request):
         form = WorkDayForm(initial={'date': datetime.date.today().isoformat()}, instance=WorkDay())
     return render(request, 'app/workdayform.html', {'form': form, 'times': weekly_times})
 
-@login_required(login_url='/user/login/')
+@login_required(login_url=login_url)
 def addProject(request):
     if request.method == 'POST':
         form = AddProjectForm(request.POST, instance=Project())
@@ -68,6 +67,8 @@ def addProject(request):
             new_project = form.save(commit=False)
             new_project.owner = request.user
             new_project.save()
+            for contributor in form.cleaned_data['contributor']:
+                new_contributor = Contributor.objects.create(contributor=contributor, project=new_project)
             return HttpResponseRedirect(reverse('log-time'))
         else:
             return render(request, 'app/addprojectform.html', {'form': form})
@@ -75,13 +76,37 @@ def addProject(request):
         form = AddProjectForm(instance=Project())
     return render(request, 'app/addprojectform.html', {'form': form})
 
-@login_required(login_url='/user/login/')
+@login_required(login_url=login_url)
+def editProject(request, project_id):
+    project_to_edit = Project.objects.get(pk=project_id)
+    if request.method == 'POST':
+        Contributor.objects.filter(project=project_to_edit).delete()
+        form = AddProjectForm(request.POST, instance=Project())
+        if form.is_valid():
+            edited_form = form.save(commit=False)
+            project_to_edit.projectName = edited_form.projectName
+            project_to_edit.save()
+            for contributor in form.cleaned_data['contributors']:
+                new_contributor = Contributor.objects.create(contributor=contributor, project=project_to_edit)
+            return HttpResponseRedirect(reverse('log-time'))
+        else:
+            return render(request, 'app/addprojectform.html', {'form': form, 'action': 'edit'})
+    else:
+        contributors = Contributor.objects.filter(project=project_to_edit).values_list('contributor__pk', flat=True)
+        print contributors
+        users = User.objects.filter(id__in=contributors)
+        data = {'projectName':project_to_edit.projectName, 'contributor':users}
+        print data
+        form = AddProjectForm(initial=data)
+        return render(request, 'app/addprojectform.html', {'form': form, 'action': 'edit'})
+
+@login_required(login_url=login_url)
 def myProjects(request):
     projects = Project.objects.filter(owner=request.user)
     return render(request, 'app/myprojects.html', {'projects':projects})
 
 
-@login_required(login_url='/user/login/')
+@login_required(login_url=login_url)
 def viewMyTimes(request):
     logged_in_user = request.user
     current_filters = getFilters(request)
@@ -103,7 +128,7 @@ def viewMyTimes(request):
     return render(request, 'app/viewmytimes.html', {'times': times, 'filters': filters})
 
 
-@login_required(login_url='/user/login/')
+@login_required(login_url=login_url)
 def editTime(request, time_id):
     time_to_edit = WorkDay.objects.get(pk=time_id)
     if request.method == 'POST':
@@ -122,14 +147,14 @@ def editTime(request, time_id):
     return render(request, 'app/workdayform.html', {'form': form, 'action': 'edit'})
 
 
-@login_required(login_url='/user/login/')
+@login_required(login_url=login_url)
 def deleteTime(request, time_id):
     time_to_delete = WorkDay.objects.get(pk=time_id)
     time_to_delete.delete()
     return HttpResponseRedirect(reverse('view-my-times'))
 
 
-@login_required(login_url='/user/login/')
+@login_required(login_url=login_url)
 def projectsView(request):
     current_filters = getFilters(request)
 
@@ -174,7 +199,7 @@ def projectsView(request):
                 'date_from': current_filters['date_from']
                 })
 
-@login_required(login_url='/user/login/')
+@login_required(login_url=login_url)
 def usersView(request):
     user_filter = request.GET.get('user', 'all')
     date_to_filter = request.GET.get('dateto', '')
@@ -217,7 +242,7 @@ def usersView(request):
     return render(request, 'app/viewusers.html', {'users': all_users, 'filters': filters})
 
 
-@login_required(login_url='/user/login/')
+@login_required(login_url=login_url)
 def getProjectCSV(request):
     current_filters = getFilters(request)
 

@@ -16,7 +16,7 @@
     {% for group in user.groups.all %}
       {% if group.name == "manager" %}
         <li class='menu-item'><a href='{% url "projects-view" %}'>View all times</a></li>
-        <li class='menu-item'><a href='{% url "add-project" %}'>Add project</a></li>
+        <li class='menu-item'><a href='{% url "my-projects" %}'>My projects</a></li>
 
       {% endif %}
     {% endfor %}

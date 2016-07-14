@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<h1 class='page-title'>Add a new project</h1>
+<h1 class='page-title'>{% if action == "edit" %}Edit this project{% else %}Add a new project{% endif %}</h1>
 
 <form method="post">
   {% csrf_token %}

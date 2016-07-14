@@ -6,9 +6,11 @@
 
 {% block content %}
 
+<a href='{% url "add-project" %}'>Add a new project</a>
+
 <ul>
 {% for project in projects %}
-<li>{{ project.projectName }}</li>
+<li>{{ project.projectName }} - <a href='{% url "edit-project" project.pk %}'>Edit project</a></li>
 {% endfor %}
 </ul>
 

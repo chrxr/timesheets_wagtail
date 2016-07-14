@@ -18,5 +18,6 @@ urlpatterns = [
     url(r'^get-project-csv/$', views.getProjectCSV, name='get-project-csv'),
     url(r'^signup/$', views.createAccount, name='create-account'),
     url(r'^add-project/$', views.addProject, name='add-project'),
+    url(r'^edit-project/([0-9]+)/$', views.editProject, name='edit-project'),
     url(r'^my-projects/$', views.myProjects, name='my-projects'),
 ]
