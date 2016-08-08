@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.contrib.auth import views, authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .forms import WorkDayForm, CreateAccountForm, AddProjectForm
+from .forms import WorkDayForm, CreateAccountForm, AddProjectForm, EditProjectForm
 from .models import WorkDay, Project, Contributor
 import datetime
 import csv
@@ -40,10 +40,11 @@ def logTime(request):
     week_beginning = date_today - datetime.timedelta(days=day_today)
     week_ending = week_beginning + datetime.timedelta(days=(5-day_today))
 
+    # Get weekly times to display below the form
     weekly_times = WorkDay.objects.filter(date__gte=week_beginning, date__lte=week_ending, user=request.user)
 
     if request.method == 'POST':
-        form = WorkDayForm(request.POST, instance=WorkDay())
+        form = WorkDayForm(request.POST, instance=WorkDay(), user=request.user)
         if form.is_valid():
             new_log = form.save(commit=False)
             new_log.user = request.user
@@ -54,26 +55,27 @@ def logTime(request):
             new_log.save()
             return HttpResponseRedirect(reverse('view-my-times'))
         else:
-            return render(request, 'app/workdayform.html', {'form': form})
+            return render(request, 'app/workdayform.html', {'form': form, 'times': weekly_times})
     else:
-        form = WorkDayForm(initial={'date': datetime.date.today().isoformat()}, instance=WorkDay())
+        form = WorkDayForm(initial={'date': datetime.date.today().isoformat()}, instance=WorkDay(), user=request.user)
     return render(request, 'app/workdayform.html', {'form': form, 'times': weekly_times})
 
 @login_required(login_url=login_url)
 def addProject(request):
     if request.method == 'POST':
-        form = AddProjectForm(request.POST, instance=Project())
+        form = AddProjectForm(request.POST, instance=Project(), user=request.user)
         if form.is_valid():
             new_project = form.save(commit=False)
             new_project.owner = request.user
             new_project.save()
-            for contributor in form.cleaned_data['contributor']:
+            print form.cleaned_data
+            for contributor in form.cleaned_data['contributors']:
                 new_contributor = Contributor.objects.create(contributor=contributor, project=new_project)
             return HttpResponseRedirect(reverse('log-time'))
         else:
             return render(request, 'app/addprojectform.html', {'form': form})
     else:
-        form = AddProjectForm(instance=Project())
+        form = AddProjectForm(instance=Project(), user=request.user)
     return render(request, 'app/addprojectform.html', {'form': form})
 
 @login_required(login_url=login_url)
@@ -81,7 +83,7 @@ def editProject(request, project_id):
     project_to_edit = Project.objects.get(pk=project_id)
     if request.method == 'POST':
         Contributor.objects.filter(project=project_to_edit).delete()
-        form = AddProjectForm(request.POST, instance=Project())
+        form = AddProjectForm(request.POST, instance=Project(), user=request.user)
         if form.is_valid():
             edited_form = form.save(commit=False)
             project_to_edit.projectName = edited_form.projectName
@@ -93,11 +95,9 @@ def editProject(request, project_id):
             return render(request, 'app/addprojectform.html', {'form': form, 'action': 'edit'})
     else:
         contributors = Contributor.objects.filter(project=project_to_edit).values_list('contributor__pk', flat=True)
-        print contributors
         users = User.objects.filter(id__in=contributors)
-        data = {'projectName':project_to_edit.projectName, 'contributor':users}
-        print data
-        form = AddProjectForm(initial=data)
+        data = {'projectName':project_to_edit.projectName}
+        form = EditProjectForm(initial=data, user=request.user, contributors=users)
         return render(request, 'app/addprojectform.html', {'form': form, 'action': 'edit'})
 
 @login_required(login_url=login_url)
@@ -132,7 +132,7 @@ def viewMyTimes(request):
 def editTime(request, time_id):
     time_to_edit = WorkDay.objects.get(pk=time_id)
     if request.method == 'POST':
-        form = WorkDayForm(request.POST, instance=WorkDay())
+        form = WorkDayForm(request.POST, instance=WorkDay(), user=request.user)
         if form.is_valid():
             edited_form = form.save(commit=False)
             time_to_edit.date = edited_form.date
@@ -141,10 +141,10 @@ def editTime(request, time_id):
             time_to_edit.save()
             return HttpResponseRedirect(reverse('view-my-times'))
         else:
-            return HttpResponse("ERROR!")
+            return render(request, 'app/workdayform.html', {'form': form})
     else:
-        form = WorkDayForm(instance=time_to_edit)
-    return render(request, 'app/workdayform.html', {'form': form, 'action': 'edit'})
+        form = WorkDayForm(instance=time_to_edit, user=request.user)
+    return render(request, 'app/workdayform.html', {'form': form})
 
 
 @login_required(login_url=login_url)
