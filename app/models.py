@@ -5,6 +5,11 @@ from django.contrib.auth.models import User, Group
 
 # Create your models here.
 
+TIME_CHOICES = (
+    ("hours", "Hours"),
+    ("days", "Days"),
+)
+
 HOURS_CHOICES = (
     ("1","a full day"),
     ("0.5", "half a day"),
@@ -21,6 +26,7 @@ User.add_to_class("__str__", get_full_name)
 class Project(models.Model):
     projectName = models.CharField("Project name", max_length=255)
     owner = models.ForeignKey(User, blank=True, null=True)
+    time_units = models.CharField(max_length=255, choices=TIME_CHOICES, default="days")
 
     class Meta:
         ordering = ['projectName']
@@ -36,5 +42,5 @@ class WorkDay(models.Model):
     date = models.DateField("Date")
     project = models.ForeignKey('Project')
     hours = models.DecimalField(null=True, blank=True, max_digits=4, decimal_places=2)
-    days = models.CharField(max_length=255, choices = HOURS_CHOICES)
+    days = models.CharField(max_length=255, choices=HOURS_CHOICES)
     user = models.ForeignKey(User)

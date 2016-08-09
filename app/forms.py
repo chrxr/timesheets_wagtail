@@ -27,7 +27,7 @@ class WorkDayForm(forms.ModelForm):
 class AddProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = ['projectName']
+        fields = ['projectName', 'time_units']
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user',None)

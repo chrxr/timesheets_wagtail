@@ -96,7 +96,7 @@ def editProject(request, project_id):
     else:
         contributors = Contributor.objects.filter(project=project_to_edit).values_list('contributor__pk', flat=True)
         users = User.objects.filter(id__in=contributors)
-        data = {'projectName':project_to_edit.projectName}
+        data = {'projectName':project_to_edit.projectName, 'time_units':project_to_edit.time_units}
         form = EditProjectForm(initial=data, user=request.user, contributors=users)
         return render(request, 'app/addprojectform.html', {'form': form, 'action': 'edit'})
 
